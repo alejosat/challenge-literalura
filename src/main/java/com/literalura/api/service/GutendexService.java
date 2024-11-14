@@ -31,29 +31,52 @@ public class GutendexService {
                 book.setCopyright((boolean) result.get("copyright"));
                 book.setDownloadCount((int) result.get("download_count"));
 
-                // Mapeo de autores
+                // **Mapeo de Subjects**
+                List<String> subjects = (List<String>) result.get("subjects");
+                if (subjects != null) {
+                    book.setSubjects(new ArrayList<>(subjects));
+                }
+
+                // **Mapeo de Bookshelves**
+                List<String> bookshelves = (List<String>) result.get("bookshelves");
+                if (bookshelves != null) {
+                    book.setBookshelves(new ArrayList<>(bookshelves));
+                }
+
+                // **Mapeo de Languages**
+                List<String> languages = (List<String>) result.get("languages");
+                if (languages != null) {
+                    book.setLanguages(new ArrayList<>(languages));
+                }
+
+                // **Mapeo de Autores**
                 List<Map<String, Object>> authorsData = (List<Map<String, Object>>) result.get("authors");
                 List<Author> authors = new ArrayList<>();
-                for (Map<String, Object> authorData : authorsData) {
-                    Author author = new Author();
-                    author.setName((String) authorData.get("name"));
-                    author.setBirthyear((Integer) authorData.get("birth_year"));
-                    author.setDeathyear((Integer) authorData.get("death_year"));
-                    authors.add(author);
+                if (authorsData != null) {
+                    for (Map<String, Object> authorData : authorsData) {
+                        Author author = new Author();
+                        author.setName((String) authorData.get("name"));
+                        author.setBirthYear((Integer) authorData.get("birth_year"));
+                        author.setDeathYear((Integer) authorData.get("death_year"));
+                        authors.add(author);
+                    }
                 }
                 book.setAuthors(authors);
 
-                // Mapeo de formatos
+                // **Mapeo de Formatos**
                 Map<String, String> formatsData = (Map<String, String>) result.get("formats");
                 List<Format> formats = new ArrayList<>();
-                for (Map.Entry<String, String> entry : formatsData.entrySet()) {
-                    Format format = new Format();
-                    format.setType(entry.getKey());
-                    format.setUrl(entry.getValue());
-                    formats.add(format);
+                if (formatsData != null) {
+                    for (Map.Entry<String, String> entry : formatsData.entrySet()) {
+                        Format format = new Format();
+                        format.setType(entry.getKey());
+                        format.setUrl(entry.getValue());
+                        formats.add(format);
+                    }
                 }
                 book.setFormats(formats);
 
+                // Agregar el libro a la lista
                 books.add(book);
             }
         }

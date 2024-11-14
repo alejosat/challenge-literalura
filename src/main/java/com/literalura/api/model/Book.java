@@ -3,6 +3,7 @@ package com.literalura.api.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Setter
@@ -21,13 +22,13 @@ public class Book {
     private int downloadCount;
 
     @ElementCollection
-    private List<String> subjects;
+    private List<String> subjects = new ArrayList<>();
 
     @ElementCollection
-    private List<String> bookshelves;
+    private List<String> bookshelves = new ArrayList<>();
 
     @ElementCollection
-    private List<String> languages;
+    private List<String> languages = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id")

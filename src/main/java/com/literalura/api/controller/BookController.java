@@ -53,7 +53,7 @@ public class BookController {
     }
 
     @GetMapping("/authors/living")
-    public ResponseEntity<List<Author>> getLivingAuthorList(@RequestParam int year) {
+    public ResponseEntity<List<Author>> getLivingAuthorList(@RequestParam Integer year) {
         List<Author> livingAuthors = authorRepository.findLivingAuthorsInYear(year);
         return ResponseEntity.ok(livingAuthors);
     }
