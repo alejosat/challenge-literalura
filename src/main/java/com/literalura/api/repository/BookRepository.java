@@ -12,4 +12,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query("SELECT b FROM Book b WHERE :language MEMBER OF b.languages")
     List<Book> findBooksByLanguage(@Param("language") String language);
+
+    List<Book> findByAuthorsId(@Param("authorId") Long authorId);
+
+    List<Book> findBySubjectsContainingIgnoreCase(String subject);
 }
